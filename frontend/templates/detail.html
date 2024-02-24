@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="{% static '/static/css/style2.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Book Details</h1>
+
+    <div id="book-details">
+        <strong>Title:</strong> <span id="title"></span><br>
+        <strong>Author:</strong> <span id="author"></span><br>
+        <strong>Created by:</strong> <span id="created_by"></span><br>
+        <strong>Shared With:</strong> <span id="shared_with_names"></span><br>
+        <strong>Shared Permissions:</strong> <span id="permission_given"></span><br>
+        <br>
+
+
+<!--        <button id="edit-book-btn">Edit Book</button>-->
+        <button type="button" onclick="deleteBook({{ book.id }})" id="delete-book-btn">Delete Book</button>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <form id="edit-book-form" class="hidden">
+        <label for="edit-title">Title:</label>
+        <input type="text" id="edit-title" class="form-input" required>
+
+        <label for="edit-author">Author:</label>
+        <input type="text" id="edit-author" class="form-input" required>
+
+        <label for="shared_with">Share with:</label>
+        <select id="shared_with" class="form-input">
+            <option value="1">Admin</option>
+            <option value="2">Nishan</option>
+            <option value="3">Bishab</option>
+        </select>
+
+        <label for="shared_permissions">Permission:</label>
+        <select id="shared_permissions" class="form-input">
+            <option value="4">Read Only</option>
+            <option value="2">Update</option>
+        </select>
+
+        <button type="button" onclick="updateBook()">Save Changes</button>
+    </form>
+    <script>
+        var bookId = {{ book.id }};
+        document.addEventListener('DOMContentLoaded', function () {
+            getBookDetails(bookId);
+            setBookId(bookId);
+        });
+    </script>
+</div>
+
+<script src="{% static 'js/detail.js' %}"></script>
+</body>
+</html>

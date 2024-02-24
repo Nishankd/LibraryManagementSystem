@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book List</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>Book List</h1>
+        <ul class="book-list" id="list-book">
+            {% for book in books %}
+                <li class="book-item">
+                    <strong>Title:</strong> {{book.title}}<br>
+                    <strong>Author:</strong> {{book.author}}<br>
+                    <strong>Created by:</strong> {{book.created_by.username}}<br>
+<!--                    <strong>Shared with:</strong>-->
+<!--                    {% for user in book.shared_with.all %}-->
+<!--                        {{ user.username }}{% if not forloop.last %}, {% endif %}-->
+<!--                    {% endfor %}<br>-->
+<!--                    <strong>Shared Permissions:</strong>-->
+<!--                    {% for permission in book.shared_permissions.all %}-->
+<!--                        {{ permission.permission }}-->
+<!--                    {% endfor %}<br>-->
+                    <!-- View Details button on the right -->
+                    <div class="book-details">
+                        <a href="{% url 'detail' pk=book.id %}" class="btn-view-details">View Details</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!--form for creating a new book        -->
+        <form id="newBookForm" class="new-book-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" class="form-input" required>
+
+            <label for="author">Author:</label>
+            <input type="text" id="author" class="form-input" required>
+
+            <label for="shared_with">Share with:</label>
+            <select id="shared_with" class="form-input">
+                <option value="1">Admin</option>
+                <option value="2">Nishan</option>
+                <option value="3">Bishab</option>
+            </select>
+
+            <label for="shared_permissions">Permission:</label>
+            <select id="shared_permissions" class="form-input">
+                <option value="4">Read Only</option>
+                <option value="2">Update</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <button type="button" onclick="createBook()" class="btn-create-book">Create Book</button>
+        </form>
+    </div>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>
+
+
+
+
+
