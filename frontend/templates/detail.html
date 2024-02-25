@@ -22,7 +22,7 @@
 
 
 <!--        <button id="edit-book-btn">Edit Book</button>-->
-        <button type="button" onclick="deleteBook({{ book.id }})" id="delete-book-btn">Delete Book</button>
+        <button type="button" onclick="deleteBook({{ book.id }})" id="delete-book-btn" disabled>Delete Book</button>
     </div>
 
     <br>
@@ -49,7 +49,7 @@
             <option value="2">Update</option>
         </select>
 
-        <button type="button" onclick="updateBook({{ book.id }})" class="btn-update-book">Save Changes</button>
+        <button type="button" onclick="updateBook({{ book.id }})" id="btn-update-book" disabled>Save Changes</button>
     </form>
     <script>
         var bookId = {{ book.id }};
@@ -118,7 +118,15 @@
                     document.getElementById('created_by').textContent = book.created_by.username;
                     document.getElementById('shared_with_names').textContent = book.shared_with_names;
                     document.getElementById('permission_given').textContent = book.permission_given;
-                })  // Missing closing parenthesis here
+
+                    if (book.permission_given.includes('Read Only')) {
+                        document.getElementById('delete-book-btn').disabled = true;
+                        document.getElementById('btn-update-book').disabled = true;
+                    } else if (book.permission_given.includes('Update')) {
+                        document.getElementById('delete-book-btn').disabled = false;
+                        document.getElementById('btn-update-book').disabled = false;
+                    }
+                    })
                 .catch(error => {
                     console.error('Error fetching book details:', error);
                 });
@@ -155,6 +163,7 @@
                 });
             }
         }
+
 
         // Function to get CSRF token from cookies
         function getCookie(name) {
